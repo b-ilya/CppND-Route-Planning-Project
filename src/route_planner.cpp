@@ -43,7 +43,7 @@ RouteModel::Node *RoutePlanner::NextNode() {
         float node_2_cost = node_2->g_value + node_2->h_value;
         return node_1_cost > node_2_cost;
     });
-    auto next = open_list[0];
+    auto next = open_list[open_list.size() - 1];
     open_list.pop_back();
     return next;
 }
@@ -86,6 +86,7 @@ void RoutePlanner::AStarSearch() {
     RouteModel::Node *current_node = start_node;
 
     open_list.push_back(current_node);
+    current_node->visited = true;
     while (!open_list.empty()) {
         current_node = NextNode();
         if (current_node == end_node) {
